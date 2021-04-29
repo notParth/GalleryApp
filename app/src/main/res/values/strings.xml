@@ -9,5 +9,6 @@
     <string name="title_activity_add_album">Add album</string>
     <string name="previous">Prev</string>
     <string name="next">next</string>
-    <string name="delete">Delete</string>
+    <string name="delete">Delete img</string>
+    <string name="delete_album">Delete album</string>
 </resources>

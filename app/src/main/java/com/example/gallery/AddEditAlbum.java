@@ -28,6 +28,7 @@ public class AddEditAlbum extends AppCompatActivity {
     public static final String ALBUM_INDEX = "albumIndex";
     public static final String ALBUM_NAME = "albumName";
     public static final String ALBUM_PHOTOS = "albumPhotos";
+    public static final String ALBUM_STATE = "state";
     public static final int PICK_IMAGE = 100;
     private static final String TAG = "FragmentActivity";
 
@@ -157,6 +158,10 @@ public class AddEditAlbum extends AppCompatActivity {
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public void delete_album(View view) {
+
     }
 
     @Override

@@ -48,6 +48,19 @@
                 app:backgroundTint="@null" />
 
             <Button
+                android:id="@+id/delete_album"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="15dp"
+                android:background="@color/movieBack"
+                android:onClick="delete_album"
+                android:text="@string/delete_album"
+                android:textColor="@color/movieFore"
+                android:textSize="16sp"
+                app:backgroundTint="@null" />
+
+            <Button
                 android:id="@+id/album_cancel"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
