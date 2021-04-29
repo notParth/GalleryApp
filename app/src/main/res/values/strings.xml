@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Gallery</string>
+    <string name="name_label">Album name</string>
+    <string name="save_label">Save</string>
+    <string name="cancel_label">Back</string>
+    <string name="title_activity_add_edit_album">Edit album</string>
+    <string name="add">Add</string>
+    <string name="add_label">Add</string>
+    <string name="title_activity_add_album">Add album</string>
+    <string name="previous">Prev</string>
+    <string name="next">next</string>
+    <string name="delete">Delete</string>
+</resources>
