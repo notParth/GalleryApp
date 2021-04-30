@@ -161,7 +161,13 @@ public class AddEditAlbum extends AppCompatActivity {
     }
 
     public void delete_album(View view) {
-
+        Bundle bundle = new Bundle();
+        bundle.putInt(ALBUM_STATE, 0);
+        bundle.putInt(ALBUM_INDEX, albumIndex);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        setResult(photosAlbum.DELETE_ALBUM, intent);
+        finish();
     }
 
     @Override

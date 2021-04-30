@@ -160,6 +160,7 @@ public class photosAlbum extends AppCompatActivity {
 
     public static final int EDIT_ALBUM_CODE = 1;
     public static final int ADD_ALBUM_CODE = 2;
+    public static final int DELETE_ALBUM = 1;
     private ListView listView;
     private ArrayList<Album> albums;
 
@@ -227,12 +228,18 @@ public class photosAlbum extends AppCompatActivity {
             Bundle bundle = intent.getExtras();
             if (bundle == null)
                 return;
+
             int index = bundle.getInt(AddEditAlbum.ALBUM_INDEX);
             if (resultCode == RESULT_CANCELED) {
                 albums.get(index).setPhotos(bundle.getParcelableArrayList(AddEditAlbum.ALBUM_PHOTOS));
                 return;
             }
-
+            if (resultCode == DELETE_ALBUM) {
+                albums.remove(index);
+                listView.setAdapter(
+                        new ArrayAdapter<Album>(this, R.layout.album, albums));
+                return;
+            }
             String name = bundle.getString(AddEditAlbum.ALBUM_NAME);
             Album album = albums.get(index);
             albums.get(index).setPhotos(bundle.getParcelableArrayList(AddEditAlbum.ALBUM_PHOTOS));
