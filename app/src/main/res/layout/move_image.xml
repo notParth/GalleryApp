@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.gallery.moveImage">
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="cancel_move"
+        android:text="@string/cancel_label" />
+
+    <ListView
+        android:id="@+id/album_names_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/purple_500"
+        android:dividerHeight="1px"/>
+</LinearLayout>
