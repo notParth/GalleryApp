@@ -11,4 +11,6 @@
     <string name="next">next</string>
     <string name="delete">Delete img</string>
     <string name="delete_album">Delete album</string>
+    <string name="move">Move img</string>
+    <string name="title_activity_move">Move image</string>
 </resources>

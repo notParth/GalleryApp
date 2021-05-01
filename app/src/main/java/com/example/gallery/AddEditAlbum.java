@@ -28,8 +28,12 @@ public class AddEditAlbum extends AppCompatActivity {
     public static final String ALBUM_INDEX = "albumIndex";
     public static final String ALBUM_NAME = "albumName";
     public static final String ALBUM_PHOTOS = "albumPhotos";
+    public static final String ALBUM_NAMES = "albumNames";
+    public static final String SELECTED_ALBUM = "moveAlbumIndex";
+    public static final String PHOTO = "photo";
     public static final String ALBUM_STATE = "state";
     public static final int PICK_IMAGE = 100;
+    public static final int MOVE_IMAGE = 200;
     private static final String TAG = "FragmentActivity";
 
     private int albumIndex;
@@ -39,6 +43,7 @@ public class AddEditAlbum extends AppCompatActivity {
     private ArrayList<Photo> photos;
     private Uri imageUri;
     private static int image_pos;
+    private ArrayList<Album> album_names;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +61,7 @@ public class AddEditAlbum extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         albumIndex = bundle.getInt(ALBUM_INDEX);
         photos = bundle.getParcelableArrayList(ALBUM_PHOTOS);
+        album_names = bundle.getParcelableArrayList(ALBUM_NAMES);
         if (photos != null && photos.size() > 0) {
             show_image.setImageURI(Uri.parse(photos.get(0).getPath()));
             image_pos = 0;
@@ -67,6 +73,16 @@ public class AddEditAlbum extends AppCompatActivity {
 
         listViewPhotos.setOnItemClickListener((p, V, pos, id) ->
                 showImage(pos));
+    }
+
+    public void move_image(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(ALBUM_NAMES, album_names);
+        bundle.putInt(ALBUM_INDEX, albumIndex);
+        bundle.putParcelable(PHOTO, photos.get(image_pos));
+        Intent intent = new Intent(this, moveImage.class);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, MOVE_IMAGE);
     }
 
     public void showImage(int pos) {
@@ -130,6 +146,7 @@ public class AddEditAlbum extends AppCompatActivity {
     public void cancel(View view) {
         Bundle bundle = new Bundle();
         bundle.putInt(ALBUM_INDEX, albumIndex);
+        bundle.putParcelableArrayList(ALBUM_NAMES, album_names);
         bundle.putParcelableArrayList(ALBUM_PHOTOS, photos);
         Intent intent = new Intent();
         intent.putExtras(bundle);
@@ -153,6 +170,7 @@ public class AddEditAlbum extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putInt(ALBUM_INDEX, albumIndex);
         bundle.putString(ALBUM_NAME, name);
+        bundle.putParcelableArrayList(ALBUM_NAMES, album_names);
         bundle.putParcelableArrayList(ALBUM_PHOTOS, photos);
         Intent intent = new Intent();
         intent.putExtras(bundle);
@@ -164,6 +182,7 @@ public class AddEditAlbum extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putInt(ALBUM_STATE, 0);
         bundle.putInt(ALBUM_INDEX, albumIndex);
+        bundle.putParcelableArrayList(ALBUM_NAMES, album_names);
         Intent intent = new Intent();
         intent.putExtras(bundle);
         setResult(photosAlbum.DELETE_ALBUM, intent);
@@ -215,6 +234,13 @@ public class AddEditAlbum extends AppCompatActivity {
             photos.add(new Photo(path, fileName));
             myAdapter adapter= new myAdapter(this, photos);
             listViewPhotos.setAdapter(adapter);
+        }
+        else {
+            if (resultCode == RESULT_OK && requestCode == MOVE_IMAGE) {
+                Bundle bundle = data.getExtras();
+                album_names = bundle.getParcelableArrayList(ALBUM_NAMES);
+                delete_image(findViewById(R.id.root));
+            }
         }
     }
 }

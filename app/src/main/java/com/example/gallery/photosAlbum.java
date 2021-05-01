@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-class Album {
+class Album implements Parcelable{
 
     private String name;
     private ArrayList<Photo> photos;
@@ -29,6 +29,23 @@ class Album {
         this.name = name;
         photos = new ArrayList<Photo>();
     }
+
+    protected Album(Parcel in) {
+        name = in.readString();
+        photos = in.createTypedArrayList(Photo.CREATOR);
+    }
+
+    public static final Creator<Album> CREATOR = new Creator<Album>() {
+        @Override
+        public Album createFromParcel(Parcel in) {
+            return new Album(in);
+        }
+
+        @Override
+        public Album[] newArray(int size) {
+            return new Album[size];
+        }
+    };
 
     public String toString() {
         return name;
@@ -46,6 +63,16 @@ class Album {
         return photos;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeTypedList(photos);
+    }
 }
 
 class Photo implements Parcelable{
@@ -211,6 +238,7 @@ public class photosAlbum extends AppCompatActivity {
     }
     private void showAlbum(int pos) {
         Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(AddEditAlbum.ALBUM_NAMES, albums);
         Album album = albums.get(pos);
         bundle.putInt(AddEditAlbum.ALBUM_INDEX, pos);
         bundle.putString(AddEditAlbum.ALBUM_NAME, album.toString());
@@ -218,7 +246,6 @@ public class photosAlbum extends AppCompatActivity {
         Intent intent = new Intent(this, AddEditAlbum.class);
         intent.putExtras(bundle);
         startActivityForResult(intent, EDIT_ALBUM_CODE);
-
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -231,15 +258,20 @@ public class photosAlbum extends AppCompatActivity {
 
             int index = bundle.getInt(AddEditAlbum.ALBUM_INDEX);
             if (resultCode == RESULT_CANCELED) {
+                albums = bundle.getParcelableArrayList(AddEditAlbum.ALBUM_NAMES);
                 albums.get(index).setPhotos(bundle.getParcelableArrayList(AddEditAlbum.ALBUM_PHOTOS));
+                listView.setAdapter(
+                        new ArrayAdapter<Album>(this, R.layout.album, albums));
                 return;
             }
             if (resultCode == DELETE_ALBUM) {
+                albums = bundle.getParcelableArrayList(AddEditAlbum.ALBUM_NAMES);
                 albums.remove(index);
                 listView.setAdapter(
                         new ArrayAdapter<Album>(this, R.layout.album, albums));
                 return;
             }
+            albums = bundle.getParcelableArrayList(AddEditAlbum.ALBUM_NAMES);
             String name = bundle.getString(AddEditAlbum.ALBUM_NAME);
             Album album = albums.get(index);
             albums.get(index).setPhotos(bundle.getParcelableArrayList(AddEditAlbum.ALBUM_PHOTOS));

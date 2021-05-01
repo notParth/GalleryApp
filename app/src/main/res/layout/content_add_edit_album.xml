@@ -7,6 +7,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
+        android:id="@+id/root"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
         android:padding="20dp">
@@ -125,6 +126,19 @@
                 app:backgroundTint="@null" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/move_image"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="370dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="15dp"
+            android:background="@color/movieBack"
+            android:onClick="move_image"
+            android:text="@string/move"
+            android:textColor="@color/movieFore"
+            android:textSize="16sp"
+            app:backgroundTint="@null" />
 
         <ListView
             android:id="@+id/image_list"
