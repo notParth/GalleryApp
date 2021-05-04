@@ -3,6 +3,7 @@ package com.example.gallery;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
@@ -15,12 +16,18 @@ import android.widget.ListView;
 
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-class Album implements Parcelable{
+class Album implements Parcelable, Serializable {
 
     private String name;
     private ArrayList<Photo> photos;
@@ -75,7 +82,7 @@ class Album implements Parcelable{
     }
 }
 
-class Photo implements Parcelable{
+class Photo implements Parcelable, Serializable{
     String path;
     ArrayList<Tag> tags;
     String FileName;
@@ -125,7 +132,7 @@ class Photo implements Parcelable{
     }
 }
 
-class Tag implements Parcelable {
+class Tag implements Parcelable, Serializable {
     String type;
     String name;
 
@@ -197,11 +204,14 @@ public class photosAlbum extends AppCompatActivity {
         setContentView(R.layout.album_view);
 
         try {
-            FileInputStream fis = openFileInput("session.dat");
-            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            FileInputStream fis = openFileInput("myData");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            albums = (ArrayList) ois.readObject();
+            ois.close();
+            fis.close();
 
         }
-        catch (IOException e) {
+        catch (IOException | ClassNotFoundException e) {
             albums = new ArrayList<>(1);
             albums.add(new Album("sample"));
         }
@@ -213,6 +223,22 @@ public class photosAlbum extends AppCompatActivity {
 
         listView.setOnItemClickListener((p, V, pos, id) ->
                 showAlbum(pos));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            FileOutputStream fos = getApplicationContext().openFileOutput("myData", Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(albums);
+            oos.close();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -248,11 +274,23 @@ public class photosAlbum extends AppCompatActivity {
         startActivityForResult(intent, EDIT_ALBUM_CODE);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onStop();
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (requestCode == EDIT_ALBUM_CODE) {
-            Bundle bundle = intent.getExtras();
+            Bundle bundle = null;
+            try {
+                bundle = intent.getExtras();
+            }
+            catch(NullPointerException e) {
+                return;
+            }
             if (bundle == null)
                 return;
 

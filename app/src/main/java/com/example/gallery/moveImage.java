@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import androidx.annotation.Nullable;
@@ -38,6 +39,11 @@ public class moveImage extends AppCompatActivity {
         );
 
         listViewAlbumNames.setOnItemClickListener((p, V, pos, id) -> album_selected(pos));
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Please use the provided back button", Toast.LENGTH_SHORT).show();
     }
 
     public void cancel_move(View view) {

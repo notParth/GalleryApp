@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -75,7 +76,14 @@ public class AddEditAlbum extends AppCompatActivity {
                 showImage(pos));
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Please use the provided back button", Toast.LENGTH_LONG).show();
+    }
+
     public void move_image(View view) {
+        if(photos.size() == 0)
+            return;
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(ALBUM_NAMES, album_names);
         bundle.putInt(ALBUM_INDEX, albumIndex);
@@ -117,7 +125,7 @@ public class AddEditAlbum extends AppCompatActivity {
         myAdapter adapter= new myAdapter(this, photos);
         listViewPhotos.setAdapter(adapter);
         if (photos.size() != 0)
-            next_image(view);
+            previous_image(view);
         else
             show_image.setImageResource(android.R.color.transparent);
     }
