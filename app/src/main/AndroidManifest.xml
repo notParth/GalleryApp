@@ -35,6 +35,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.gallery.AddEditAlbum" />
         </activity>
+        <activity
+            android:name="com.example.gallery.AddTag"
+            android:label="@string/title_activity_add_tag"
+            android:theme="@style/Theme.Gallery.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.gallery.AddEditAlbum" />
+        </activity>
         <activity android:name="com.example.gallery.photosAlbum">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -75,11 +75,51 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/move_image"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="370dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="15dp"
+            android:background="@color/movieBack"
+            android:onClick="move_image"
+            android:text="@string/move"
+            android:textColor="@color/movieFore"
+            android:textSize="16sp"
+            app:backgroundTint="@null" />
+
         <ImageView
             android:id="@+id/show_image"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:text="@string/tags_label" />
+
+        <ListView
+            android:id="@+id/tags_list"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:divider="@color/purple_500"
+            android:dividerHeight="1px" />
+
+        <Button
+            android:id="@+id/add_tag"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="370dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="15dp"
+            android:background="@color/movieBack"
+            android:onClick="addTag"
+            android:text="@string/tag"
+            android:textColor="@color/movieFore"
+            android:textSize="16sp"
+            app:backgroundTint="@null" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="86dp"
@@ -126,19 +166,6 @@
                 app:backgroundTint="@null" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/move_image"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="370dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="15dp"
-            android:background="@color/movieBack"
-            android:onClick="move_image"
-            android:text="@string/move"
-            android:textColor="@color/movieFore"
-            android:textSize="16sp"
-            app:backgroundTint="@null" />
 
         <ListView
             android:id="@+id/image_list"

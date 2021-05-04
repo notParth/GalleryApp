@@ -13,4 +13,13 @@
     <string name="delete_album">Delete album</string>
     <string name="move">Move img</string>
     <string name="title_activity_move">Move image</string>
+    <string name="tag">Add tag</string>
+    <string name="tag_name_label">Tag name</string>
+    <string name="tag_type_label">Tag type</string>
+    <string name="title_activity_add_tag">Add tag</string>
+    <string name="tags_label">Note: (click on tag to remove)</string>
+    <string-array name="tags_type">
+        <item>Person</item>
+        <item>Location</item>
+    </string-array>
 </resources>

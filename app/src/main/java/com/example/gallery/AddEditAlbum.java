@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,16 +36,19 @@ public class AddEditAlbum extends AppCompatActivity {
     public static final String ALBUM_STATE = "state";
     public static final int PICK_IMAGE = 100;
     public static final int MOVE_IMAGE = 200;
+    public static final int ADD_TAG_CODE = 300;
     private static final String TAG = "FragmentActivity";
 
     private int albumIndex;
     private ListView listViewPhotos;
+    private ListView listViewTags;
     private EditText albumName;
     private ImageView show_image;
     private ArrayList<Photo> photos;
     private Uri imageUri;
     private static int image_pos;
     private ArrayList<Album> album_names;
+    private ArrayList<Tag> tags;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,14 +70,40 @@ public class AddEditAlbum extends AppCompatActivity {
         if (photos != null && photos.size() > 0) {
             show_image.setImageURI(Uri.parse(photos.get(0).getPath()));
             image_pos = 0;
+            tags = photos.get(image_pos).tags;
         }
         albumName.setText(bundle.getString(ALBUM_NAME));
         listViewPhotos = findViewById(R.id.image_list);
         myAdapter adapter= new myAdapter(this, photos);
         listViewPhotos.setAdapter(adapter);
-
         listViewPhotos.setOnItemClickListener((p, V, pos, id) ->
                 showImage(pos));
+
+        listViewTags = findViewById(R.id.tags_list);
+        listViewTags.setAdapter(
+                new ArrayAdapter<Tag>(this, R.layout.album, tags)
+        );
+
+        listViewTags.setOnItemClickListener((p, V, pos, id) ->
+                deleteTag(pos));
+    }
+
+    public void addTag(View view) {
+        Intent intent = new Intent(this, AddTag.class);
+        startActivityForResult(intent, ADD_TAG_CODE);
+    }
+
+    public void deleteTag(int pos) {
+        tags.remove(pos);
+        photos.get(image_pos).tags = this.tags;
+        setTags();
+    }
+
+    public void setTags() {
+        tags = photos.get(image_pos).tags;
+        listViewTags.setAdapter(
+                new ArrayAdapter<Tag>(this, R.layout.album, tags)
+        );
     }
 
     @Override
@@ -96,6 +126,7 @@ public class AddEditAlbum extends AppCompatActivity {
     public void showImage(int pos) {
         show_image.setImageURI(Uri.parse(photos.get(pos).getPath()));
         image_pos = pos;
+        setTags();
     }
 
     public void previous_image(View view) {
@@ -243,11 +274,25 @@ public class AddEditAlbum extends AppCompatActivity {
             myAdapter adapter= new myAdapter(this, photos);
             listViewPhotos.setAdapter(adapter);
         }
-        else {
-            if (resultCode == RESULT_OK && requestCode == MOVE_IMAGE) {
+        else if (resultCode == RESULT_OK && requestCode == MOVE_IMAGE) {
                 Bundle bundle = data.getExtras();
                 album_names = bundle.getParcelableArrayList(ALBUM_NAMES);
                 delete_image(findViewById(R.id.root));
+        }
+        else {
+            if (resultCode == RESULT_OK && requestCode == ADD_TAG_CODE) {
+                Bundle bundle = data.getExtras();
+                String name = bundle.getString(AddTag.TAG_NAME);
+                String type = bundle.getString(AddTag.TAG_TYPE);
+                if (type.equals("Person")) {
+                    tags.add(new personTag(name));
+                }
+                else {
+                    tags.add(new locationTag(name));
+                }
+                setTags();
+                photos.get(image_pos).tags = this.tags;
+                setTags();
             }
         }
     }
