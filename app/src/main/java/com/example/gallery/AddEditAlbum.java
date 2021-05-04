@@ -61,6 +61,7 @@ public class AddEditAlbum extends AppCompatActivity {
         // would result in the array resetting to the default state
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        tags = new ArrayList<Tag>();
         albumName = findViewById(R.id.album_name);
         show_image = findViewById(R.id.show_image);
         Bundle bundle = getIntent().getExtras();
