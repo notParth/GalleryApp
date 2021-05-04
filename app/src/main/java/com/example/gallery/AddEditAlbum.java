@@ -274,6 +274,7 @@ public class AddEditAlbum extends AppCompatActivity {
             photos.add(new Photo(path, fileName));
             myAdapter adapter= new myAdapter(this, photos);
             listViewPhotos.setAdapter(adapter);
+
         }
         else if (resultCode == RESULT_OK && requestCode == MOVE_IMAGE) {
                 Bundle bundle = data.getExtras();

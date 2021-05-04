@@ -1,9 +1,12 @@
 package com.example.gallery;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -90,8 +93,23 @@ public class searchTag extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
+
+        b.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard();
+                return false;
+            }
+
+
+        });
+
     }
 
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(tagValue.getWindowToken(), 0);
+    }
     @Override
     public void onBackPressed() {
         Toast.makeText(this, "Please use the provided back button", Toast.LENGTH_LONG).show();
