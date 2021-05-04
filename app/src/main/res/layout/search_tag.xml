@@ -9,13 +9,14 @@
         android:id="@+id/tagTypeSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="44dp"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/tagType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,12 +30,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/tagVal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:editable="false"
         android:ems="10"
         android:inputType="none"
@@ -47,13 +48,14 @@
         android:id="@+id/tagValue"
         android:layout_width="340dp"
         android:layout_height="37dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="21dp"
         android:layout_marginBottom="32dp"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/sbutton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tagVal" />
+        app:layout_constraintTop_toBottomOf="@+id/tagVal"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ListView
         android:id="@+id/searchedList"
