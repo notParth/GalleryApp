@@ -20,6 +20,14 @@
                 android:value="com.example.gallery.photosAlbum" />
         </activity>
         <activity
+            android:name="com.example.gallery.searchTag"
+            android:label="Tag Search"
+            android:theme="@style/Theme.Gallery.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.gallery.photosAlbum" />
+        </activity>
+        <activity
             android:name="com.example.gallery.AddAlbum"
             android:label="@string/title_activity_add_album"
             android:theme="@style/Theme.Gallery.NoActionBar">

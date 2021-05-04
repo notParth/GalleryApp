@@ -11,7 +11,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 
@@ -82,6 +84,7 @@ class Album implements Parcelable, Serializable {
     }
 }
 
+
 class Photo implements Parcelable, Serializable{
     String path;
     ArrayList<Tag> tags;
@@ -111,6 +114,12 @@ class Photo implements Parcelable, Serializable{
         }
     };
 
+
+    public ArrayList<Tag> getTags() {
+        return tags;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -131,6 +140,7 @@ class Photo implements Parcelable, Serializable{
         return FileName;
     }
 }
+
 
 class Tag implements Parcelable, Serializable {
     String type;
@@ -157,6 +167,14 @@ class Tag implements Parcelable, Serializable {
             return new Tag[size];
         }
     };
+
+    public String getType(){
+        return type;
+    }
+
+    public String getName(){
+        return name;
+    }
 
     public String toString() {
         return type + ": "+ name;
@@ -195,8 +213,11 @@ public class photosAlbum extends AppCompatActivity {
     public static final int EDIT_ALBUM_CODE = 1;
     public static final int ADD_ALBUM_CODE = 2;
     public static final int DELETE_ALBUM = 1;
+    public static final int SEARCH = 3;
     private ListView listView;
     private ArrayList<Album> albums;
+    private Button button;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,6 +236,10 @@ public class photosAlbum extends AppCompatActivity {
             albums = new ArrayList<>(1);
             albums.add(new Album("sample"));
         }
+
+        button = findViewById(R.id.button2);
+        button.setOnClickListener(e -> searchMove());
+
 
         listView = findViewById(R.id.album_list);
         listView.setAdapter(
@@ -258,10 +283,21 @@ public class photosAlbum extends AppCompatActivity {
         }
     }
 
+
     private void addMovie() {
         Intent intent = new Intent(this, AddAlbum.class);
         startActivityForResult(intent, ADD_ALBUM_CODE);
     }
+
+
+    private void searchMove() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(AddEditAlbum.ALBUM_NAMES, albums);
+        Intent intent = new Intent(this, searchTag.class);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, SEARCH);
+    }
+
     private void showAlbum(int pos) {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(AddEditAlbum.ALBUM_NAMES, albums);

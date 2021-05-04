@@ -13,6 +13,9 @@
     <string name="delete_album">Delete album</string>
     <string name="move">Move img</string>
     <string name="title_activity_move">Move image</string>
+    <string name="searchTag">Search</string>
+    <string name="tagType">Tag Type:</string>
+    <string name="tagVal">Tag Value</string>
     <string name="tag">Add tag</string>
     <string name="tag_name_label">Tag name</string>
     <string name="tag_type_label">Tag type</string>

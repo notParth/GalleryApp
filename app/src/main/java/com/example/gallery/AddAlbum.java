@@ -19,6 +19,10 @@ public class AddAlbum extends AppCompatActivity {
     private int albumIndex;
     public static final String ALBUM_INDEX = "albumIndex";
     public static final String ALBUM_NAME = "albumName";
+    public static final String ALBUM_PHOTOS = "albumPhotos";
+    public static final String ALBUM_NAMES = "albumNames";
+    public static final int SEARCH_IMAGE = 300;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +43,8 @@ public class AddAlbum extends AppCompatActivity {
         setResult(RESULT_CANCELED);
         finish();
     }
+
+
 
     public void save(View view) {
         String name = albumName.getText().toString();

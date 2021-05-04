@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/searchButton"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.gallery.photosAlbum">
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/searchTag" />
 
     <ListView
         android:id="@+id/album_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/purple_500"
-        android:dividerHeight="1px"/>
+        android:dividerHeight="1px">
+
+    </ListView>
 </LinearLayout>
